@@ -1,5 +1,5 @@
 const addButton = document.querySelector(".addButton");
-var input = document.querySelector(".input");
+let input = document.querySelector(".input");
 const container = document.querySelector(".container");
 
 class item {
@@ -33,13 +33,12 @@ class item {
     editButton.addEventListener("click", () => this.edit(input));
 
     removeButton.addEventListener("click", () =>
-      this.remove(itemBox, input.value)
+        this.remove(itemBox, input.value)
     );
   }
 
   async edit(input) {
     const newInput = prompt("Enter new msg:", input.value);
-    input.value = newInput;
     await fetch("/api/modify", {
       method: "POST",
       body: JSON.stringify({ old: input.value, new: newInput }),
@@ -62,7 +61,7 @@ class item {
 }
 
 async function check() {
-  if (input.value != "") {
+  if (input.value !== "") {
     new item(input.value);
 
     await fetch("/api/create", {
@@ -89,7 +88,7 @@ boot();
 addButton.addEventListener("click", check);
 
 window.addEventListener("keydown", (e) => {
-  if (e.which == 13) {
+  if (e.which === 13) {
     check();
   }
 });

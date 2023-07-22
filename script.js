@@ -4,7 +4,7 @@ const app = express();
 const mongoose = require("mongoose");
 const Todo = require("./models/todo");
 
-mongoose.connect("mongodb://localhost/firstmongo");
+mongoose.connect("mongodb://127.0.0.1:27017/firstmongo");
 
 app.use("/", express.static(path.resolve(__dirname, "assets")));
 
@@ -20,23 +20,17 @@ app.post("/api/delete", async (req, res) => {
 
   res.json({ status: "ok" });
 });
-
 app.post("/api/modify", async (req, res) => {
   const { old: oldTitle, new: newTitle } = req.body;
-
   const response = await Todo.updateOne(
-    {
-      record: oldTitle,
-    },
-    {
-      $set: {
-        record: newTitle,
-      },
-    }
+      { record: oldTitle },
+      {
+        $set: {
+          record: newTitle,
+        },
+      }
   );
-
   console.log(response);
-
   res.json({ status: "ok" });
 });
 
